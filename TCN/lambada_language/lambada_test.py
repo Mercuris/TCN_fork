@@ -108,7 +108,7 @@ def train():
     model.train()
     total_loss = 0
     start_time = time.time()
-    for babatch_idxtch, i in enumerate(range(0, train_data.size(1) - 1, args.validseqlen)):
+    for batch_idx, i in enumerate(range(0, train_data.size(1) - 1, args.validseqlen)):
         if i + args.seq_len - args.validseqlen >= train_data.size(1) - 1:
             continue
         data, targets = get_batch(train_data, i, args)
