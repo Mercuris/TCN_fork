@@ -112,6 +112,9 @@ def train(ep):
         
         optimizer.zero_grad()
         out = model(x.unsqueeze(1).contiguous())
+        # Loss compares Cross Entropy between prob of each digit (0-9) for each element of sequence to the truth
+        # out.view(-1, n_classes) is 32 640 x 10 = (32 x 1020) x 10 -> (Batch size x L) x Prob for each digit
+        # y.view(-1) is 32 640 x 1 = (32 x 1020) x 1 -> (Batch size x L) x Value of true digit
         loss = criterion(out.view(-1, n_classes), y.view(-1))
         pred = out.view(-1, n_classes).data.max(1, keepdim=True)[1]
         correct += pred.eq(y.data.view_as(pred)).cpu().sum()
